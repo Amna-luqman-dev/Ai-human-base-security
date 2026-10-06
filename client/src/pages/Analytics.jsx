@@ -4,7 +4,8 @@ function Analytics() {
   return (
     <div className="p-6 md:p-10">
       <h1 className="text-3xl font-bold text-white mb-6">
-        Analytics
+        Analytical
+
       </h1>
 
       <AnalyticsCard />
