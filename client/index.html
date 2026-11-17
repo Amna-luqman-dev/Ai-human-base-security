@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Security System</title>
+  </head>
+  <body>
+    <div id="app">
+
+      <!-- Safety alert banner — shown across all pages when harmful activity detected -->
+      <div id="safety-banner" class="safety-banner safety-banner--hidden" role="alert">
+        <span class="safety-banner__icon">🚨</span>
+        <span id="safety-banner-text" class="safety-banner__text">Potential harmful activity detected</span>
+        <button id="safety-banner-dismiss" class="safety-banner__dismiss" type="button">✕</button>
+      </div>
+
+      <!-- ── ALARM PANEL ────────────────────────────────────────────────────────
+           Shown when a CRITICAL threat (fire / fight / weapon) is detected.
+           Flashes red, plays Web Audio beep, and shows the threat category.
+           User must click "Silence" to stop the audio — system stays armed.
+      ──────────────────────────────────────────────────────────────────────── -->
+      <div id="alarm-panel" class="alarm-panel alarm-panel--hidden" role="alert" aria-live="assertive">
+        <div class="alarm-panel__pulse"></div>
+        <span class="alarm-panel__icon" id="alarm-icon">🚨</span>
+        <div class="alarm-panel__body">
+          <span class="alarm-panel__title" id="alarm-title">CRITICAL ALERT</span>
+          <span class="alarm-panel__detail" id="alarm-detail">Threat detected</span>
+        </div>
+        <button id="alarm-silence-btn" class="alarm-panel__btn" type="button">
+          🔕 Silence
+        </button>
+      </div>
+
+      <div class="layout">
+
+        <!-- ── SIDEBAR ──────────────────────────────────────────────────────
+             The sidebar is always visible. Each <a> uses a hash href so the
+             router picks it up via the hashchange event.
+        ──────────────────────────────────────────────────────────────────── -->
+        <aside class="sidebar">
+          <div class="sidebar__brand">
+            <span class="sidebar__logo">▣</span>
+            <span class="sidebar__name">HomeSec</span>
+          </div>
+
+          <nav class="nav" aria-label="Main navigation">
+            <a href="#/" class="nav__link nav__link--active">
+              <span class="nav__icon">⊞</span>
+              <span class="nav__label">Dashboard</span>
+            </a>
+            <a href="#/cameras" class="nav__link">
+              <span class="nav__icon">📷</span>
+              <span class="nav__label">Cameras</span>
+              <!-- Badge shows online camera count -->
+              <span class="nav__badge" id="nav-badge-cameras"></span>
+            </a>
+            <a href="#/alerts" class="nav__link">
+              <span class="nav__icon">🚨</span>
+              <span class="nav__label">Alerts</span>
+              <span class="nav__badge nav__badge--red" id="nav-badge-alerts"></span>
+            </a>
+            <a href="#/network" class="nav__link">
+              <span class="nav__icon">🛡</span>
+              <span class="nav__label">Network</span>
+              <span class="nav__badge nav__badge--pending">Soon</span>
+            </a>
+            <a href="#/settings" class="nav__link">
+              <span class="nav__icon">⚙</span>
+              <span class="nav__label">Settings</span>
+            </a>
+            <a href="#/training" class="nav__link">
+              <span class="nav__icon">🧠</span>
+              <span class="nav__label">Training</span>
+              <span class="nav__badge" id="nav-badge-training"></span>
+            </a>
+          </nav>
+
+          <!-- Sidebar footer: connection dot + arm/disarm control -->
+          <div class="sidebar__footer">
+            <div class="conn-indicator" id="conn-indicator">
+              <span class="conn-indicator__dot" id="conn-dot"></span>
+              <span class="conn-indicator__label" id="conn-label">Connecting…</span>
+            </div>
+            <div class="sidebar__arm-row">
+              <span id="system-badge" class="badge badge--disarmed">DISARMED</span>
+              <button id="arm-toggle" class="btn btn--arm btn--sm" type="button">Arm</button>
+            </div>
+            <button id="monitoring-toggle" class="btn btn--monitoring-on btn--sm btn--full" type="button">
+              Monitoring On
+            </button>
+          </div>
+        </aside>
+
+        <!-- ── MAIN CONTENT AREA ─────────────────────────────────────────── -->
+        <div class="content-wrap">
+
+          <!-- Topbar — page title area + global controls -->
+          <header class="topbar">
+            <!-- Hamburger for mobile sidebar toggle -->
+            <button class="topbar__menu-btn" id="menu-btn" aria-label="Toggle sidebar">☰</button>
+            <div class="topbar__right">
+              <span class="topbar__clock" id="topbar-clock"></span>
+            </div>
+          </header>
+
+          <!-- Page outlet — router mounts pages here -->
+          <div id="page-outlet" class="page-outlet"></div>
+
+        </div>
+      </div>
+
+      <!-- Toast container -->
+      <div class="toast-container" id="toast-container"></div>
+
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
