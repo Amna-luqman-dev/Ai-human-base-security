@@ -2,3 +2,13 @@
 __pycache__/
 .env
 *.pyc
+
+# Base YOLO models (auto-downloaded by Ultralytics on first run)
+yolov8n.pt
+yolov8s.pt
+
+# Large archives
+*.zip
+
+# Node modules
+client/node_modules/
